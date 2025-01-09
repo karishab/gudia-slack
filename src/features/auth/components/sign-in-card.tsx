@@ -21,7 +21,7 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
         <Card className="w-full h-full p-8">
             <CardHeader className="px-0 pt-0">
                 <CardTitle>
-                    Sich Einlogen
+                   Sign In to continue
                 </CardTitle>
             </CardHeader>
             <CardDescription className='pb-2 '>
