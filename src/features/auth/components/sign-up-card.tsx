@@ -11,12 +11,16 @@ import {
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { SignInFlow } from '../types';
+import { useState } from 'react';
 
 interface SignUpCardProps {
     setState: (state: SignInFlow) => void;
 };
 
 export const SignUpCard = ({ setState }: SignUpCardProps) => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     return (
         <Card className="w-full h-full p-8">
             <CardHeader className="px-0 pt-0">
@@ -31,26 +35,26 @@ export const SignUpCard = ({ setState }: SignUpCardProps) => {
                 <form className="space-y-2.5">
                     <Input
                         disabled={false}
-                        value=""
-                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         placeholder="Email"
-                        onChange={() => { }}
+                        type="email"
                         required
                     />
                     <Input
                         disabled={false}
-                        value=""
+                        value={password}
                         type="password"
                         placeholder="Password"
-                        onChange={() => { }}
+                        onChange={(e) => setPassword(e.target.value)}
                         required
                     />
                     <Input
                         disabled={false}
-                        value=""
+                        value={confirmPassword}
                         type="password"
                         placeholder="Confirm password"
-                        onChange={() => { }}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
                         required
                     />
                     <Button type="submit" className="w-full" size="lg" disabled={false}>

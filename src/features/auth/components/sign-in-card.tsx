@@ -11,17 +11,20 @@ import {
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { SignInFlow } from '../types';
+import { useState } from 'react';
 
 interface SignInCardProps {
     setState: (state: SignInFlow) => void;
 };
 
 export const SignInCard = ({ setState }: SignInCardProps) => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     return (
         <Card className="w-full h-full p-8">
             <CardHeader className="px-0 pt-0">
                 <CardTitle>
-                   Sign In to continue
+                    Sign In to continue
                 </CardTitle>
             </CardHeader>
             <CardDescription className='pb-2 '>
@@ -31,18 +34,18 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
                 <form className="space-y-2.5">
                     <Input
                         disabled={false}
-                        value=""
-                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         placeholder="Email"
-                        onChange={() => { }}
+                        type="email"
                         required
                     />
                     <Input
                         disabled={false}
-                        value=""
+                        value={password}
                         type="password"
                         placeholder="Password"
-                        onChange={() => { }}
+                        onChange={(e) => setPassword(e.target.value)}
                         required
                     />
                     <Button type="submit" className="w-full" size="lg" disabled={false}>
