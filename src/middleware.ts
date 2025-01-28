@@ -9,14 +9,23 @@ const isPublicPage = createRouteMatcher(["/auth(.*)"]); // Erlaubt "/auth" und a
 
 export default convexAuthNextjsMiddleware(async (request) => {
     try {
-        const isAuthenticated = await isAuthenticatedNextjs();
+        const isAuthenticated = await isAuthenticatedNextjs(); // `await` verwenden
 
+        // Wenn der Nutzer auf eine private Seite zugreifen möchte und nicht eingeloggt ist
         if (!isPublicPage(request) && !isAuthenticated) {
             return nextjsMiddlewareRedirect(request, "/auth");
         }
 
-        return undefined; // Weiterleitung zulassen
-    } catch {
+        // Wenn der Nutzer auf eine Auth-Seite zugreifen möchte und bereits eingeloggt ist
+        if (isPublicPage(request) && isAuthenticated) {
+            return nextjsMiddlewareRedirect(request, "/");
+        }
+
+        // Weiterleitung zulassen
+        return undefined;
+    } catch (error) {
+        // Fehlerbehandlung: Weiterleitung zur Startseite oder Auth-Seite
+        console.error("Fehler in der Middleware:", error);
         return nextjsMiddlewareRedirect(request, "/auth");
     }
 });
