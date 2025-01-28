@@ -1,9 +1,8 @@
+import { AuthScreen } from "@/features/auth/components/auth-screen";
 
 const AuthPage = () => {
     return (
-      <div className="text-black" >
-        Log In!
-      </div>
+      <AuthScreen />
     );
 }
 export default AuthPage;
