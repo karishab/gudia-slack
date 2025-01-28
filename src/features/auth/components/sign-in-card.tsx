@@ -1,6 +1,7 @@
 import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
 import { useAuthActions } from "@convex-dev/auth/react";
+import { TriangleAlert } from "lucide-react";
 import { Button } from "@/components/ui/button"
 import {
     Card,
@@ -22,7 +23,22 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
     const { signIn } = useAuthActions();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
     const [pending, setPending] = useState(false);
+    const onPasswordSignIn = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        setPending(true);
+        signIn("password", { email, password, flow: "SignIn" })
+            .catch(() => {
+                setError("Invalid email or password");
+
+            })
+            .finally(() => {
+                setPending(false)
+            });
+    };
+
     const onProviderSignIn = (value: "google" | "github") => {
         setPending(true);
         signIn(value)
@@ -36,12 +52,18 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
                 <CardTitle>
                     Sign In to continue
                 </CardTitle>
+                <CardDescription className='pb-2 '>
+                    Use your email or another account to login
+                </CardDescription>
             </CardHeader>
-            <CardDescription className='pb-2 '>
-                Use your email or another account to login
-            </CardDescription>
+            {!!error && (
+                <div className='bg-destructive/15 p-3 rounded-md flex items-center gap-x-2 text-sm text-destructive mb-6'>
+                    <TriangleAlert className="size-4" />
+                    <p>{error}</p>
+                </div>
+            )}
             <CardContent className="space-y-5 px-0 pb-0">
-                <form className="space-y-2.5">
+                <form onSubmit={onPasswordSignIn} className="space-y-2.5">
                     <Input
                         disabled={pending}
                         value={email}
