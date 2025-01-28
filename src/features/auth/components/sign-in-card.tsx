@@ -29,7 +29,7 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
         e.preventDefault();
 
         setPending(true);
-        signIn("password", { email, password, flow: "SignIn" })
+        signIn("password", { email, password, flow: "signIn" })
             .catch(() => {
                 setError("Invalid email or password");
 
